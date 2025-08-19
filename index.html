@@ -29,10 +29,12 @@
       background-color: #006400;
       color: white;
       padding: 12px 20px;
-      margin: 10px;
+      margin: 10px 0;
       text-decoration: none;
       border-radius: 5px;
       font-weight: bold;
+      cursor: pointer;
+      border: none;
     }
     .section {
       border: 1px solid #ccc;
@@ -78,7 +80,7 @@
 
   <form class="section" id="registroForm">
     <label for="zonal"><i class="fas fa-user-tie"></i> Zonal a cargo</label>
-    <select id="zonal" name="zonal" onchange="actualizarAgricultores()">
+    <select id="zonal" name="zonal" onchange="actualizarAgricultores()" required>
       <option value="">Seleccione</option>
       <option value="Eugenio Cornejo">Eugenio Cornejo</option>
       <option value="Fabian Cornejo">Fabian Cornejo</option>
@@ -87,10 +89,10 @@
     </select>
 
     <label for="agricultor"><i class="fas fa-users"></i> Agricultor y contrato</label>
-    <select id="agricultor" name="agricultor"></select>
+    <select id="agricultor" name="agricultor" required></select>
 
     <label for="maquina"><i class="fas fa-cogs"></i> Trasplantadora</label>
-    <select id="maquina" name="maquina">
+    <select id="maquina" name="maquina" required>
       <option value="TR01">TR01</option>
       <option value="TR02">TR02</option>
       <option value="TR03">TR03</option>
@@ -98,10 +100,10 @@
     </select>
 
     <label for="fecha"><i class="fas fa-calendar-alt"></i> Fecha trasplante</label>
-    <input type="date" id="fecha" name="fecha">
+    <input type="date" id="fecha" name="fecha" required>
 
     <label for="hectareas"><i class="fas fa-seedling"></i> Ha trasplantadas</label>
-    <input type="number" id="hectareas" name="hectareas" min="0" step="0.01">
+    <input type="number" id="hectareas" name="hectareas" min="0" step="0.01" required>
 
     <br><br>
     <button type="button" class="button" onclick="confirmarDatos()">Grabar información</button>
@@ -139,7 +141,7 @@
       const maquina = document.getElementById("maquina").value;
       const fecha = document.getElementById("fecha").value;
       const hectareas = document.getElementById("hectareas").value;
-      const ahora = new Date().toLocaleString();
+      const fechaHora = new Date().toLocaleString();
 
       if (!zonal || !agricultor || !maquina || !fecha || !hectareas) {
         alert("Por favor complete todos los campos.");
@@ -148,19 +150,30 @@
 
       const confirmacion = confirm(`Confirma que los datos están correctos?\n\nZonal: ${zonal}\nAgricultor: ${agricultor}\nTrasplantadora: ${maquina}\nFecha: ${fecha}\nHa trasplantadas: ${hectareas}`);
       if (confirmacion) {
-        alert("Colega, sus datos han sido guardados exitosamente :)");
-        // Aquí se enviaría a Google Sheets
-        enviarAGoogleSheets(ahora, zonal, agricultor, maquina, fecha, hectareas);
+        fetch("https://script.google.com/macros/s/AKfycbzpvMYSqjj2zJPAIAEdESpGMRzUdfuVIICad25tTCtSGiz5kAqKhwzXQaEg6WIhchqc7g/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fechaHora,
+            zonal,
+            agricultor,
+            maquina,
+            fecha,
+            hectareas
+          })
+        })
+        .then(response => response.text())
+        .then(data => {
+          alert("Colega, sus datos han sido guardados exitosamente :)");
+          document.getElementById("registroForm").reset();
+          document.getElementById("agricultor").innerHTML = "";
+        })
+        .catch(error => {
+          alert("Hubo un error al guardar los datos. Intente nuevamente.");
+          console.error(error);
+        });
       }
     }
-
-    function enviarAGoogleSheets(fechaHora, zonal, agricultor, maquina, fecha, hectareas) {
-  fetch("https://script.google.com/macros/s/AKfycbw54ga8s1MF5rXklkVd6ROQh6Au8Yk5oGl6ayBK0e-dDx76cd6z8QvrZ2rCD1161atqhg/exec", {
-    method: "POST",
-    body: JSON.stringify({ ahora, zonal, agricultor, maquina, fecha, hectareas }),
-    headers: { "Content-Type": "application/json" }
-  });
-}
   </script>
 </body>
 </html>
