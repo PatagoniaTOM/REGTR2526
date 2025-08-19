@@ -155,7 +155,7 @@
     }
 
     function enviarAGoogleSheets(fechaHora, zonal, agricultor, maquina, fecha, hectareas) {
-  fetch("https://script.google.com/macros/s/AKfycbz5ugtcR6MDZx8cuqmqy-SpHthtg6dGfAn-DL4tY0eVoVamJYKf2ETOUjR0rQ_FmnWWeQ/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbw54ga8s1MF5rXklkVd6ROQh6Au8Yk5oGl6ayBK0e-dDx76cd6z8QvrZ2rCD1161atqhg/exec", {
     method: "POST",
     body: JSON.stringify({ ahora, zonal, agricultor, maquina, fecha, hectareas }),
     headers: { "Content-Type": "application/json" }
