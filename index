@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro diario Patagoniafresh</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+    }
+    header img {
+      max-width: 200px;
+    }
+    h1 {
+      font-size: 25px;
+      margin-top: 10px;
+    }
+    .toggle-btn {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      background-color: #ccc;
+      border: none;
+      cursor: pointer;
+    }
+    .section {
+      margin: 30px;
+      padding: 20px;
+      border: 1px solid #eee;
+      border-radius: 10px;
+    }
+    .section i {
+      margin-right: 10px;
+    }
+    .btn {
+      display: inline-block;
+      margin: 10px 5px;
+      padding: 10px 20px;
+      background-color: #ccc;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+      border-radius: 5px;
+    }
+    form {
+      margin-top: 20px;
+    }
+    select, input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="https://patagoniafresh.com/wp-content/uploads/2025/03/logo.png" alt="Logo Patagoniafresh">
+    <h1>Registro diario de superficie Patagoniafresh 2025-2026</h1>
+    <button class="toggle-btn" onclick="toggleVersion()">Versión móvil</button>
+  </header>
+
+  <div class="section">
+    <i class="fas fa-chart-line"></i>
+    <a class="btn" href="https://lookerstudio.google.com/reporting/119433e9-695e-4c3c-bc32-c7cdecf8c1f2" target="_blank">Revisar estadísticas</a>
+    <a class="btn" href="https://docs.google.com/spreadsheets/d/1ey1OEBS4XAfQspcxFVbw6s_7A68QUWLLnmkPGTtnoB4/export?format=xls" target="_blank">Descargar estadísticas</a>
+  </div>
+
+  <div class="section">
+    <form id="registroForm">
+      <label for="zonal"><i class="fas fa-user-tie"></i> Zonal a cargo:</label>
+      <select id="zonal" name="zonal" onchange="actualizarAgricultores()">
+        <option value="">Seleccione</option>
+        <option value="Eugenio Cornejo">Eugenio Cornejo</option>
+        <option value="Fabian Cornejo">Fabian Cornejo</option>
+        <option value="Juan Soto">Juan Soto</option>
+        <option value="Victor Olivares">Victor Olivares</option>
+      </select>
+
+      <label for="agricultor"><i class="fas fa-users"></i> Agricultor y contrato:</label>
+      <select id="agricultor" name="agricultor"></select>
+
+      <label for="maquina"><i class="fas fa-cogs"></i> Trasplantadora:</label>
+      <select id="maquina" name="maquina">
+        <option value="TR01">TR01</option>
+        <option value="TR02">TR02</option>
+        <option value="TR03">TR03</option>
+        <option value="TT5">TT5</option>
+      </select>
+
+      <label for="fecha"><i class="fas fa-calendar-alt"></i> Fecha trasplante:</label>
+      <input type="date" id="fecha" name="fecha">
+
+      <label for="hectareas"><i class="fas fa-seedling"></i> Ha trasplantadas:</label>
+      <input type="number" id="hectareas" name="hectareas" min="0" step="0.01">
+
+      <button type="button" class="btn" onclick="confirmarDatos()">Grabar información</button>
+    </form>
+  </div>
+
+  <footer>
+    Esta aplicación web ha sido creada por el área agrícola de Patagoniafresh
+  </footer>
+
+  <script>
+    const agricultores = {
+      "Eugenio Cornejo": ["Cinco Teosoras 234", "Miguel contreras 134", "Benjamin Zapata 111"],
+      "Fabian Cornejo": ["Myrian Quitral 123", "Hendry Lopez 123", "Ramon Cea 231"],
+      "Juan Soto": ["Osvaldo Morande 123", "Patricio Lagos 345", "Elia Lopez 232"],
+      "Victor Olivares": ["Patagoniafresh 111", "Amaro 232", "Ivan Labra 123"]
+    };
+
+    function actualizarAgricultores() {
+      const zonal = document.getElementById("zonal").value;
+      const agricultorSelect = document.getElementById("agricultor");
+      agricultorSelect.innerHTML = "";
+      if (agricultores[zonal]) {
+        agricultores[zonal].forEach(ag => {
+          const option = document.createElement("option");
+          option.value = ag;
+          option.textContent = ag;
+          agricultorSelect.appendChild(option);
+        });
+      }
+    }
+
+    function confirmarDatos() {
+      const zonal = document.getElementById("zonal").value;
+      const agricultor = document.getElementById("agricultor").value;
+      const maquina = document.getElementById("maquina").value;
+      const fecha = document.getElementById("fecha").value;
+      const hectareas = document.getElementById("hectareas").value;
+      const fechaHora = new Date().toLocaleString();
+
+      const confirmacion = confirm(`Confirma que los datos están correctos?\n\nZonal: ${zonal}\nAgricultor: ${agricultor}\nTrasplantadora: ${maquina}\nFecha: ${fecha}\nHa: ${hectareas}`);
+      if (confirmacion) {
+        alert("Colega, sus datos han sido guardados exitosamente :)");
+        // Aquí iría el código para enviar los datos a Google Sheets
+        // usando Google Apps Script vinculado al archivo RT2526
+      }
+    }
+
+    function toggleVersion() {
+      const btn = document.querySelector(".toggle-btn");
+      if (btn.textContent.includes("móvil")) {
+        btn.textContent = "Versión PC";
+        document.body.style.fontSize = "18px";
+      } else {
+        btn.textContent = "Versión móvil";
+        document.body.style.fontSize = "14px";
+      }
+    }
+  </script>
+</body>
+</html>
