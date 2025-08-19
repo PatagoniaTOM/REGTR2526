@@ -302,7 +302,7 @@
     btnEditar.addEventListener('click', () => modal.close());
 
     // === CONFIGURACIÓN: Reemplace esta URL por la del Web App de Google Apps Script ===
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbxB8qy3sLB_QBGSCbUjGLxX63WbdjucpMYCFyxS_3LT0GoIhKMGhOHMfzBt4L9RtkNf/exec';
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbxWLkCLR9SJgECzwSB42acLgTAFZS0dpyVZLxHSHdqoF1gmfmII-f91alju_vc5W8GFtw/exec" ;
 
     btnConfirmar.addEventListener('click', async () => {
       const d = datosActuales();
@@ -316,7 +316,7 @@
       };
 
       try{
-        if (!GAS_URL || GAS_URL.startsWith('https://script.google.com/macros/s/AKfycbxB8qy3sLB_QBGSCbUjGLxX63WbdjucpMYCFyxS_3LT0GoIhKMGhOHMfzBt4L9RtkNf/exec')){
+        if (!GAS_URL || GAS_URL.startsWith(https://script.google.com/macros/s/AKfycbxWLkCLR9SJgECzwSB42acLgTAFZS0dpyVZLxHSHdqoF1gmfmII-f91alju_vc5W8GFtw/exec)){
           alert('Falta configurar la URL del Web App de Google Apps Script (GAS_URL). Revise las instrucciones al final del archivo.');
           return;
         }
