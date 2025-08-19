@@ -1,192 +1,495 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registro Diario Patagoniafresh</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registro diario de superficie Patagoniafresh 2025-2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Iconos: Lucide (SVG) -->
+  <script defer src="https://unpkg.com/lucide@latest"></script>
   <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff;
-      margin: 0;
-      padding: 20px;
-      color: #333;
+    :root{
+      --pf-green:#0B4D2C; /* verde oscuro */
+      --pf-green-600:#10603a;
+      --pf-border:#e9ecef;
+      --pf-muted:#6b7280; /* gris */
+      --pf-radius:16px;
+      --pf-space:20px;
     }
-    header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    header img {
-      max-width: 200px;
-    }
-    h1 {
-      font-size: 25px;
-      margin-top: 10px;
-    }
-    .button {
-      display: inline-block;
-      background-color: #14532d;
-      color: white;
-      padding: 12px 20px;
-      margin: 10px;
-      text-decoration: none;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-    .section {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 30px;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    select, input {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    footer {
-      text-align: center;
-      margin-top: 50px;
-      font-size: 14px;
-      color: #666;
-    }
-    #popup {
-      display: none;
-      position: fixed;
-      top: 30%;
-      left: 50%;
-      transform: translate(-50%, -30%);
-      background: white;
-      border: 2px solid #14532d;
-      padding: 20px;
-      z-index: 1000;
-      border-radius: 10px;
-    }
-    #popup button {
-      margin: 10px;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    #popup .confirm {
-      background-color: #14532d;
-      color: white;
-    }
-    #popup .cancel {
-      background-color: #ccc;
-    }
+    html,body{background:#fff;color:#111;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;}
+    *{box-sizing:border-box}
+    img{max-width:100%;height:auto}
+    .container{max-width:960px;margin:0 auto;padding:24px}
+    header{display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+    header .brand{display:flex;align-items:center;gap:16px}
+    header img{height:44px}
+    h1{font-size:25px;line-height:1.2;margin:0;font-weight:600;text-align:center;flex:1 1 100%}
+
+    /* Boxes / secciones */
+    .section{border:1px solid var(--pf-border);border-radius:var(--pf-radius);padding:var(--pf-space);margin-top:24px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+    .section-title{display:flex;align-items:center;gap:10px;font-weight:600;margin-bottom:12px}
+    .section + .section{margin-top:28px}
+
+    /* Botones principales */
+    .actions{display:grid;grid-template-columns:1fr;gap:12px;margin-top:18px}
+    @media(min-width:560px){.actions{grid-template-columns:1fr 1fr}}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border-radius:12px;border:1px solid var(--pf-border);text-decoration:none;font-weight:600}
+    .btn-dark{background:var(--pf-green);color:#fff;border-color:var(--pf-green)}
+    .btn-dark:focus,.btn-dark:hover{background:var(--pf-green-600)}
+
+    /* Formulario */
+    form{display:grid;gap:20px}
+    .field{display:grid;gap:8px}
+    .label{display:flex;align-items:center;gap:8px;font-weight:600}
+    .help{color:var(--pf-muted);font-size:.9rem}
+    select,input[type="date"],input[type="number"]{width:100%;padding:12px 14px;border:1px solid var(--pf-border);border-radius:12px;background:#fff}
+    .grid-2{display:grid;gap:16px}
+    @media(min-width:700px){.grid-2{grid-template-columns:1fr 1fr}}
+    .submit-row{display:flex;gap:12px;flex-wrap:wrap}
+    .btn-outline{background:#fff;color:#111}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.45);padding:16px}
+    .modal[open]{display:flex}
+    .modal-card{background:#fff;border-radius:16px;max-width:560px;width:100%;padding:20px;border:1px solid var(--pf-border)}
+    .modal-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:16px}
+
+    footer{margin-top:40px;padding:20px 0;color:#4b5563;text-align:center;border-top:1px solid var(--pf-border)}
   </style>
 </head>
 <body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <img alt="Patagoniafresh" src="https://patagoniafresh.com/wp-content/uploads/2025/03/logo.png" />
+      </div>
+      <h1>Registro diario de superficie Patagoniafresh 2025-2026</h1>
+    </header>
 
-<header>
-  <img src="https://patagoniafresh.com/wp-content/uploads/2025/03/logo.png" alt="Logo Patagoniafresh">
-  <h1>Registro diario de superficie Patagoniafresh 2025-2026</h1>
-</header>
+    <!-- Acciones principales -->
+    <section class="section" aria-labelledby="acciones">
+      <div class="section-title" id="acciones">
+        <i data-lucide="bar-chart-3" aria-hidden="true"></i> Accesos rápidos
+      </div>
+      <div class="actions">
+        <a class="btn btn-dark" target="_blank" rel="noopener" href="https://lookerstudio.google.com/reporting/119433e9-695e-4c3c-bc32-c7cdecf8c1f2">
+          <i data-lucide="line-chart" aria-hidden="true"></i>
+          Revisar estadísticas
+        </a>
+        <!-- Export directo a XLSX del Google Sheet compartido -->
+        <a class="btn btn-dark" id="btn-descargar" href="https://docs.google.com/spreadsheets/d/1ey1OEBS4XAfQspcxFVbw6s_7A68QUWLLnmkPGTtnoB4/export?format=xlsx" target="_blank" rel="noopener">
+          <i data-lucide="download" aria-hidden="true"></i>
+          Descargar estadísticas
+        </a>
+      </div>
+      <p class="help" style="margin-top:10px">
+        Consejo: si el archivo no descarga automáticamente, verifique que el Google Sheet tenga permisos de acceso para su cuenta o que el enlace esté publicado.
+      </p>
+    </section>
 
-<div class="section">
-  <a class="button" href="https://lookerstudio.google.com/reporting/119433e9-695e-4c3c-bc32-c7cdecf8c1f2" target="_blank">
-    <i class="fas fa-chart-line"></i> Revisar estadísticas
-  </a>
-  <a class="button" href="https://docs.google.com/spreadsheets/d/1ey1OEBS4XAfQspcxFVbw6s_7A68QUWLLnmkPGTtnoB4/export?format=xlsx" target="_blank">
-    <i class="fas fa-file-download"></i> Descargar estadísticas
-  </a>
-</div>
+    <!-- Formulario de registro -->
+    <section class="section" aria-labelledby="formulario">
+      <div class="section-title" id="formulario">
+        <i data-lucide="clipboard-list" aria-hidden="true"></i> Registro de trasplante diario
+      </div>
 
-<div class="section">
-  <form id="registroForm">
-    <label for="zonal"><i class="fas fa-user-tie"></i> Zonal a cargo</label>
-    <select id="zonal" name="zonal" onchange="mostrarAgricultores()">
-      <option value="">Seleccione</option>
-      <option value="Eugenio Cornejo">Eugenio Cornejo</option>
-      <option value="Fabian Cornejo">Fabian Cornejo</option>
-      <option value="Juan Soto">Juan Soto</option>
-      <option value="Victor Olivares">Victor Olivares</option>
-    </select>
+      <form id="registroForm">
+        <!-- Zonal a cargo -->
+        <div class="field">
+          <label class="label" for="zonal">
+            <i data-lucide="user-cog" aria-hidden="true"></i>
+            Zonal a cargo
+          </label>
+          <select id="zonal" name="zonal" required>
+            <option value="" disabled selected>Seleccione un zonal...</option>
+            <option>Eugenio Cornejo</option>
+            <option>Fabian Cornejo</option>
+            <option>Juan Soto</option>
+            <option>Victor Olivares</option>
+          </select>
+        </div>
 
-    <label for="agricultor"><i class="fas fa-users"></i> Agricultor y contrato</label>
-    <select id="agricultor" name="agricultor"></select>
+        <!-- Agricultor y contrato (dependiente de zonal) -->
+        <div class="field">
+          <label class="label" for="agricultor">
+            <i data-lucide="users" aria-hidden="true"></i>
+            Agricultor y contrato
+          </label>
+          <select id="agricultor" name="agricultor" required disabled>
+            <option value="">Seleccione primero un zonal...</option>
+          </select>
+        </div>
 
-    <label for="maquina"><i class="fas fa-tractor"></i> Seleccione máquina trasplantadora</label>
-    <select id="maquina" name="maquina">
-      <option value="TR01">TR01</option>
-      <option value="TR02">TR02</option>
-      <option value="TR03">TR03</option>
-      <option value="TT5">TT5</option>
-    </select>
+        <!-- Trasplantadora -->
+        <div class="field">
+          <label class="label" for="maquina">
+            <i data-lucide="tractor" aria-hidden="true"></i>
+            Máquina trasplantadora
+          </label>
+          <select id="maquina" name="maquina" required>
+            <option value="" disabled selected>Seleccione código...</option>
+            <option>TR01</option>
+            <option>TR02</option>
+            <option>TR03</option>
+            <option>TT5</option>
+          </select>
+        </div>
 
-    <label for="fecha"><i class="fas fa-calendar-alt"></i> Fecha trasplante</label>
-    <input type="date" id="fecha" name="fecha">
+        <div class="grid-2">
+          <!-- Fecha de trasplante -->
+          <div class="field">
+            <label class="label" for="fecha">
+              <i data-lucide="calendar" aria-hidden="true"></i>
+              Fecha de trasplante
+            </label>
+            <input id="fecha" name="fecha" type="date" required />
+          </div>
+          <!-- Hectáreas -->
+          <div class="field">
+            <label class="label" for="hectareas">
+              <i data-lucide="ruler" aria-hidden="true"></i>
+              Ha trasplantadas
+            </label>
+            <input id="hectareas" name="hectareas" type="number" step="0.01" min="0" placeholder="0,00" required />
+          </div>
+        </div>
 
-    <label for="hectareas"><i class="fas fa-seedling"></i> Número de Ha trasplantadas</label>
-    <input type="number" id="hectareas" name="hectareas" step="0.01">
+        <div class="submit-row">
+          <button type="button" class="btn btn-dark" id="btn-grabar">
+            <i data-lucide="save" aria-hidden="true"></i>
+            Grabar información
+          </button>
+          <button type="reset" class="btn btn-outline">
+            <i data-lucide="rotate-ccw" aria-hidden="true"></i>
+            Limpiar
+          </button>
+        </div>
+      </form>
+    </section>
 
-    <button type="button" class="button" onclick="mostrarPopup()">Grabar información</button>
-  </form>
-</div>
+    <footer>
+      Esta aplicación web ha sido creada por el área agrícola de Patagoniafresh
+    </footer>
+  </div>
 
-<div id="popup">
-  <p id="resumenDatos"></p>
-  <button class="confirm" onclick="confirmarDatos()">Sí</button>
-  <button class="cancel" onclick="document.getElementById('popup').style.display='none'">Volver a modificar</button>
-</div>
+  <!-- Modal de confirmación -->
+  <dialog class="modal" id="confirmModal" aria-labelledby="confirmTitle" aria-modal="true">
+    <div class="modal-card">
+      <div class="section-title" id="confirmTitle">
+        <i data-lucide="help-circle" aria-hidden="true"></i>
+        Confirmación de datos
+      </div>
+      <div id="confirmContent" class="help" style="white-space:pre-wrap"></div>
+      <div class="modal-actions">
+        <button class="btn" id="btn-editar">
+          <i data-lucide="edit-3" aria-hidden="true"></i>
+          Volver a modificar los datos
+        </button>
+        <button class="btn btn-dark" id="btn-confirmar">
+          <i data-lucide="check-circle" aria-hidden="true"></i>
+          Sí, confirmar
+        </button>
+      </div>
+    </div>
+  </dialog>
 
-<footer>
-  Esta aplicación web ha sido creada por el área agrícola de Patagoniafresh
-</footer>
+  <!-- Modal de éxito -->
+  <dialog class="modal" id="successModal" aria-labelledby="successTitle" aria-modal="true">
+    <div class="modal-card">
+      <div class="section-title" id="successTitle">
+        <i data-lucide="check-circle-2" aria-hidden="true"></i>
+        Listo
+      </div>
+      <p>Colega, sus datos han sido guardados exitosamente :)</p>
+      <div class="modal-actions">
+        <button class="btn btn-dark" id="btn-cerrar-exito">Cerrar</button>
+      </div>
+    </div>
+  </dialog>
 
-<script>
-  const agricultores = {
-    "Eugenio Cornejo": ["Cinco Teosoras 234", "Miguel contreras 134", "Benjamin Zapata 111"],
-    "Fabian Cornejo": ["Myrian Quitral 123", "Hendry Lopez 123", "Ramon Cea 231"],
-    "Juan Soto": ["Osvaldo Morande 123", "Patricio Lagos 345", "Elia Lopez 232"],
-    "Victor Olivares": ["Patagoniafresh 111", "Amaro 232", "Ivan Labra 123"]
-  };
+  <script>
+    // Inicializar iconos
+    window.addEventListener('DOMContentLoaded', () => {
+      if (window.lucide) lucide.createIcons();
+      // Sugerir fecha de hoy
+      const hoy = new Date();
+      const tzOffset = hoy.getTimezoneOffset(); // cliente
+      const y = hoy.getFullYear();
+      const m = String(hoy.getMonth()+1).padStart(2,'0');
+      const d = String(hoy.getDate()).padStart(2,'0');
+      const inputFecha = document.getElementById('fecha');
+      if (inputFecha && !inputFecha.value) inputFecha.value = `${y}-${m}-${d}`;
+    });
 
-  function mostrarAgricultores() {
-    const zonal = document.getElementById("zonal").value;
-    const agricultorSelect = document.getElementById("agricultor");
-    agricultorSelect.innerHTML = "";
-    if (agricultores[zonal]) {
-      agricultores[zonal].forEach(a => {
-        const option = document.createElement("option");
-        option.value = a;
-        option.textContent = a;
-        agricultorSelect.appendChild(option);
+    // Mapa dependiente de Zonal -> Agricultor/Contrato
+    const mapaZonal = {
+      'Eugenio Cornejo': [
+        'Cinco Teosoras 234',
+        'Miguel contreras 134',
+        'Benjamin Zapata 111'
+      ],
+      'Fabian Cornejo': [
+        'Myrian Quitral 123',
+        'Hendry Lopez 123',
+        'Ramon Cea 231'
+      ],
+      'Juan Soto': [
+        'Osvaldo Morande 123',
+        'Patricio Lagos 345',
+        'Elia Lopez 232'
+      ],
+      'Victor Olivares': [
+        'Patagoniafresh 111',
+        'Amaro 232',
+        'Ivan Labra 123'
+      ],
+    };
+
+    const zonalSel = document.getElementById('zonal');
+    const agricultorSel = document.getElementById('agricultor');
+    zonalSel.addEventListener('change', () => {
+      const opciones = mapaZonal[zonalSel.value] || [];
+      agricultorSel.innerHTML = '';
+      if (!opciones.length){
+        agricultorSel.disabled = true;
+        agricultorSel.innerHTML = '<option value="">Seleccione primero un zonal...</option>';
+        return;
+      }
+      const frag = document.createDocumentFragment();
+      const first = document.createElement('option');
+      first.textContent = 'Seleccione agricultor y contrato...';
+      first.value='';
+      first.disabled = true; first.selected = true;
+      frag.appendChild(first);
+      opciones.forEach(txt => {
+        const opt = document.createElement('option');
+        opt.textContent = txt; opt.value = txt;
+        frag.appendChild(opt);
       });
+      agricultorSel.appendChild(frag);
+      agricultorSel.disabled = false;
+    });
+
+    // Confirmación previa a enviar
+    const btnGrabar = document.getElementById('btn-grabar');
+    const modal = document.getElementById('confirmModal');
+    const content = document.getElementById('confirmContent');
+    const btnEditar = document.getElementById('btn-editar');
+    const btnConfirmar = document.getElementById('btn-confirmar');
+    const successModal = document.getElementById('successModal');
+    const btnCerrarExito = document.getElementById('btn-cerrar-exito');
+
+    function datosActuales(){
+      const zonal = document.getElementById('zonal').value;
+      const agricultor = document.getElementById('agricultor').value;
+      const maquina = document.getElementById('maquina').value;
+      const fecha = document.getElementById('fecha').value;
+      const hectareas = document.getElementById('hectareas').value;
+      return {zonal, agricultor, maquina, fecha, hectareas};
+    }
+
+    btnGrabar.addEventListener('click', () => {
+      const form = document.getElementById('registroForm');
+      if (!form.reportValidity()) return;
+      const d = datosActuales();
+      const resumen = `Zonal: ${d.zonal}\nAgricultor y contrato: ${d.agricultor}\nTrasplantadora: ${d.maquina}\nFecha trasplante: ${d.fecha}\nHa trasplantadas: ${d.hectareas}`;
+      content.textContent = resumen + "\n\n¿Confirma que los datos están correctos?";
+      modal.showModal();
+    });
+
+    btnEditar.addEventListener('click', () => modal.close());
+
+    // === CONFIGURACIÓN: Reemplace esta URL por la del Web App de Google Apps Script ===
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbz_H6on6zkkqYCLWCd0pKJsX8uHq2t7yrN1CHPLPUJIeIRre1gRaUX8KUN0X9Lfm8kdcQ/exec';
+
+    btnConfirmar.addEventListener('click', async () => {
+      const d = datosActuales();
+      // Payload acorde al orden solicitado
+      const payload = {
+        zonal: d.zonal,
+        agricultor: d.agricultor,
+        trasplantadora: d.maquina,
+        fecha_trasplante: d.fecha,
+        ha_trasplantadas: d.hectareas
+      };
+
+      try{
+        if (!GAS_URL || GAS_URL.startsWith('https://script.google.com/macros/s/AKfycbz_H6on6zkkqYCLWCd0pKJsX8uHq2t7yrN1CHPLPUJIeIRre1gRaUX8KUN0X9Lfm8kdcQ/exec')){
+          alert('Falta configurar la URL del Web App de Google Apps Script (GAS_URL). Revise las instrucciones al final del archivo.');
+          return;
+        }
+        const res = await fetch(GAS_URL, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('Error de red');
+        const data = await res.json();
+        if (data && data.status === 'ok'){
+          modal.close();
+          successModal.showModal();
+          document.getElementById('registroForm').reset();
+          document.getElementById('agricultor').disabled = true;
+        } else {
+          throw new Error(data && data.message ? data.message : 'No se pudo guardar');
+        }
+      }catch(err){
+        modal.close();
+        alert('Ocurrió un problema al guardar en Google Sheets: ' + err.message);
+      }
+    });
+
+    btnCerrarExito.addEventListener('click', () => successModal.close());
+  </script>
+
+  <!-- =============================================
+       INSTRUCCIONES PARA VINCULAR CON GOOGLE SHEETS
+       =============================================
+
+  Objetivo: guardar cada registro en la hoja "RT2526" con encabezados en
+  este orden y exactamente con estos títulos (fila 1):
+  1) fecha y hora ingreso
+  2) Zonal
+  3) Agricultor y contrato
+  4) Trasplantadora
+  5) Fecha trasplante
+  6) Ha trasplantadas
+
+  PASO A) Crear Google Sheet
+  ----------------------------------
+  1. Cree una hoja en Google Drive llamada RT2526.
+  2. En la fila 1, escriba los encabezados exactamente como arriba.
+  3. (Opcional) En Archivo > Configuración, fije la zona horaria por ejemplo a
+     "(GMT-04:00) América/Santiago" para que el timestamp sea correcto.
+
+  PASO B) Apps Script (backend)
+  ----------------------------------
+  1. En el Sheet RT2526, vaya a Extensiones > AppScript.
+  2. Reemplace el contenido por el siguiente código y guarde.
+
+  // ======= Código Google Apps Script (copiar y pegar) =======
+  const SHEET_NAME = 'RT2526';
+  const HEADERS = [
+    'fecha y hora ingreso',
+    'Zonal',
+    'Agricultor y contrato',
+    'Trasplantadora',
+    'Fecha trasplante',
+    'Ha trasplantadas'
+  ];
+
+  function doPost(e){
+    try{
+      const ss = SpreadsheetApp.getActive();
+      let sh = ss.getSheetByName(SHEET_NAME);
+      if (!sh) sh = ss.insertSheet(SHEET_NAME);
+      // Asegurar encabezados
+      const firstRow = sh.getRange(1,1,1,HEADERS.length).getValues()[0];
+      if (JSON.stringify(firstRow) !== JSON.stringify(HEADERS)){
+        sh.getRange(1,1,1,HEADERS.length).setValues([HEADERS]);
+      }
+
+      const data = JSON.parse(e.postData.contents);
+
+      const now = new Date();
+      const fila = [
+        Utilities.formatDate(now, Session.getScriptTimeZone(), 'yyyy-MM-dd HH:mm:ss'),
+        data.zonal || '',
+        data.agricultor || '',
+        data.trasplantadora || '',
+        data.fecha_trasplante || '',
+        data.ha_trasplantadas || ''
+      ];
+      sh.appendRow(fila);
+
+      // Respuesta + CORS
+      const output = ContentService.createTextOutput(JSON.stringify({status:'ok'}))
+        .setMimeType(ContentService.MimeType.JSON);
+      return addCors(output);
+    }catch(err){
+      const output = ContentService.createTextOutput(JSON.stringify({status:'error', message: String(err)}))
+        .setMimeType(ContentService.MimeType.JSON);
+      return addCors(output, 500);
     }
   }
 
-  function mostrarPopup() {
-    const zonal = document.getElementById("zonal").value;
-    const agricultor = document.getElementById("agricultor").value;
-    const maquina = document.getElementById("maquina").value;
-    const fecha = document.getElementById("fecha").value;
-    const hectareas = document.getElementById("hectareas").value;
-    const resumen = `
-      <strong>Confirma que los datos están correctos?</strong><br>
-      Zonal: ${zonal}<br>
-      Agricultor: ${agricultor}<br>
-      Máquina: ${maquina}<br>
-      Fecha: ${fecha}<br>
-      Ha trasplantadas: ${hectareas}
-    `;
-    document.getElementById("resumenDatos").innerHTML = resumen;
-    document.getElementById("popup").style.display = "block";
+  function doGet(){
+    const output = ContentService.createTextOutput(JSON.stringify({status:'alive'}))
+      .setMimeType(ContentService.MimeType.JSON);
+    return addCors(output);
   }
 
-  function confirmarDatos() {
-    document.getElementById("popup").style.display = "none";
-    alert("Colega, sus datos han sido guardados exitosamente :)");
-    // Aquí se integraría el envío a Google Sheets
+  function addCors(output, code){
+    const resp = HtmlService.createHtmlOutput(output.getContent());
+    // ContentService no permite headers arbitrarios, así que usamos HtmlService para CORS amplio
+    const json = output.getContent();
+    const t = HtmlService.createTemplateFromFile('cors');
+    t.payload = json;
+    const html = t.evaluate();
+    return HtmlService.createHtmlOutput(html.getContent()).setTitle('RT2526 API');
   }
-</script>
+
+  // Cree un archivo adicional llamado "cors.html" en el editor de Apps Script con este contenido:
+  /*
+  <!doctype html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <script>
+      (function(){
+        var data = <?= JSON.stringify(payload) ?>;
+        var qp = new URLSearchParams(location.search);
+        var cb = qp.get('callback');
+        function send(){
+          try{
+            parent.postMessage({type:'RT2526', data:data}, '*');
+          }catch(e){}
+          document.open();
+          document.write(data);
+          document.close();
+        }
+        send();
+      })();
+    </script>
+  </head>
+  <body></body>
+  </html>
+  */
+
+  /*
+   Nota: Si prefiere una implementación CORS simple, puede usar doPost con
+   ContentService y consumirlo desde el frontend con un proxy (por ejemplo Netlify
+   functions). Alternativamente, publique el Web App con acceso "Cualquiera" y
+   consuma vía fetch; en muchos casos funciona sin headers extra.
+  */
+
+  // ======= FIN Código Apps Script =======
+
+  PASO C) Desplegar como Web App
+  ----------------------------------
+  1. En Apps Script > Implementar > Nueva implementación.
+  2. Tipo: Aplicación web.
+  3. Descripción: RT2526 API.
+  4. Ejecutar como: Su cuenta.
+  5. Quién tiene acceso: Cualquiera con el enlace (o su dominio si corresponde).
+  6. Copie la URL del Web App y péguela en este HTML reemplazando GAS_URL.
+
+  PASO D) Probar
+  ----------------------------------
+  1. Cargue este HTML en su navegador (puede alojarlo en Drive, GitHub Pages, etc.).
+  2. Complete el formulario > Grabar información > Confirmar.
+  3. Verifique en la hoja RT2526 que aparezca una nueva fila con fecha/hora ingreso,
+     zonal, agricultor y contrato, trasplantadora, fecha trasplante y ha trasplantadas.
+
+  Seguridad y control
+  ----------------------------------
+  - Mantenga el Web App con acceso restringido si necesita control por cuenta Google.
+  - Puede validar datos en Apps Script (ej. número positivo en hectáreas) y registrar
+    correo del usuario con Session.getActiveUser().getEmail() si el deploy es interno.
+
+  -->
+</body>
+</html>
