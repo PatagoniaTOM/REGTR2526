@@ -1,200 +1,477 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Registro Diario Patagoniafresh</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff;
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
-    header {
-      text-align: center;
-      padding: 20px;
-    }
-    header img {
-      max-width: 200px;
-    }
-    h1 {
-      font-size: 25px;
-      margin-top: 10px;
-    }
-    .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-    }
-    .box {
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 30px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    }
-    .btn {
-      background-color: #006400;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      margin-right: 10px;
-    }
-    .btn:hover {
-      background-color: #004d00;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    select, input[type="date"], input[type="number"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      font-size: 14px;
-      color: #666;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro diario de superficie Patagoniafresh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #fff;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        .logo {
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 25px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+        
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background-color: #1e5631;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background-color: #2a7d46;
+        }
+        
+        .form-section {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: white;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .submit-btn {
+            background-color: #1e5631;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            transition: background-color 0.3s;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #2a7d46;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 25px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .confirm {
+            background-color: #1e5631;
+            color: white;
+        }
+        
+        .cancel {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .success-message {
+            text-align: center;
+            padding: 30px;
+            background-color: #f1f9f1;
+            border-radius: 8px;
+            border-left: 5px solid #2a7d46;
+            margin: 20px 0;
+            display: none;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #eaeaea;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .button-container {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .form-section {
+                padding: 15px;
+            }
+        }
+        
+        .instructions {
+            background-color: #f8f9fa;
+            border-left: 4px solid #1e5631;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        
+        .instructions h3 {
+            color: #1e5631;
+            margin-bottom: 15px;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+        }
+        
+        .instructions code {
+            background-color: #eee;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
 </head>
 <body>
-
-  <header>
-    <img src="https://patagoniafresh.com/wp-content/uploads/2025/03/logo.png" alt="Logo Patagoniafresh" />
-    <h1>Registro diario de superficie Patagoniafresh 2025-2026</h1>
-  </header>
-
-  <div class="container">
-
-    <div class="box">
-      <button class="btn" onclick="window.open('https://lookerstudio.google.com/reporting/119433e9-695e-4c3c-bc32-c7cdecf8c1f2','_blank')">
-        <i class="fas fa-chart-line"></i> Revisar estadísticas
-      </button>
-      <button class="btn" onclick="window.open('https://docs.google.com/spreadsheets/d/1ey1OEBS4XAfQspcxFVbw6s_7A68QUWLLnmkPGTtnoB4/export?format=xlsx','_blank')">
-        <i class="fas fa-download"></i> Descargar estadísticas
-      </button>
+    <header>
+        <img src="https://patagoniafresh.com/wp-content/uploads/2025/03/logo.png" alt="Logo Patagoniafresh" class="logo">
+        <h1>Registro diario de superficie Patagoniafresh 2025-2026</h1>
+    </header>
+    
+    <div class="button-container">
+        <a href="https://lookerstudio.google.com/reporting/119433e9-695e-4c3c-bc32-c7cdecf8c1f2" class="btn">
+            <i class="fas fa-chart-bar"></i> Revisar estadísticas
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1ey1OEBS4XAfQspcxFVbw6s_7A68QUWLLnmkPGTtnoB4/export?format=xlsx" class="btn">
+            <i class="fas fa-download"></i> Descargar estadísticas
+        </a>
     </div>
-
-    <form id="registroForm" class="box">
-      <label for="zonal">Zonal a cargo</label>
-      <select id="zonal" name="zonal" onchange="actualizarAgricultores()">
-        <option value="">Seleccione</option>
-        <option value="Eugenio Cornejo">Eugenio Cornejo</option>
-        <option value="Fabian Cornejo">Fabian Cornejo</option>
-        <option value="Juan Soto">Juan Soto</option>
-        <option value="Victor Olivares">Victor Olivares</option>
-      </select>
-
-      <label for="agricultor">Agricultor / Contrato</label>
-      <select id="agricultor" name="agricultor"></select>
-
-      <label for="maquina">Máquina trasplantadora</label>
-      <select id="maquina" name="maquina">
-        <option value="TR01">TR01</option>
-        <option value="TR02">TR02</option>
-        <option value="TR03">TR03</option>
-        <option value="TT5">TT5</option>
-      </select>
-
-      <label for="fecha">Fecha</label>
-      <input type="date" id="fecha" name="fecha" required />
-
-      <label for="hectareas">Número de Ha trasplantadas</label>
-      <input type="number" id="hectareas" name="hectareas" min="0" step="0.01" required />
-
-      <button type="button" class="btn" onclick="confirmarDatos()">
-        <i class="fas fa-save"></i> Grabar información
-      </button>
+    
+    <form id="registroForm">
+        <div class="form-section">
+            <div class="form-group">
+                <label for="zonal"><i class="fas fa-user-tie"></i> Zonal a cargo</label>
+                <select id="zonal" name="zonal" required>
+                    <option value="">Seleccione un zonal</option>
+                    <option value="Eugenio Cornejo">Eugenio Cornejo</option>
+                    <option value="Fabian Cornejo">Fabian Cornejo</option>
+                    <option value="Juan Soto">Juan Soto</option>
+                    <option value="Victor Olivares">Victor Olivares</option>
+                </select>
+            </div>
+            
+            <div class="form-group hidden" id="agricultoresContainer">
+                <label for="agricultor"><i class="fas fa-users"></i> Agricultor y contrato</label>
+                <select id="agricultor" name="agricultor" required>
+                    <option value="">Seleccione un agricultor</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="form-group">
+                <label for="maquina"><i class="fas fa-tractor"></i> Máquina trasplantadora</label>
+                <select id="maquina" name="maquina" required>
+                    <option value="">Seleccione una máquina</option>
+                    <option value="TR01">TR01</option>
+                    <option value="TR02">TR02</option>
+                    <option value="TR03">TR03</option>
+                    <option value="TT5">TT5</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="fecha"><i class="far fa-calendar-alt"></i> Fecha</label>
+                <input type="date" id="fecha" name="fecha" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="hectareas"><i class="fas fa-ruler-combined"></i> Hectáreas trasplantadas</label>
+                <input type="number" id="hectareas" name="hectareas" step="0.01" min="0" required>
+            </div>
+        </div>
+        
+        <button type="button" id="submitBtn" class="submit-btn"><i class="fas fa-save"></i> Grabar información</button>
     </form>
-
-    <div id="popup" style="display:none;" class="box">
-      <p id="resumenDatos"></p>
-      <button class="btn" onclick="guardarDatos()">Sí, confirmar</button>
-      <button class="btn" onclick="document.getElementById('popup').style.display='none'">Volver a modificar</button>
+    
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirmar datos</h2>
+            <p>¿Confirma que los datos están correctos?</p>
+            <div id="modalData"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="cancelBtn">Volver a modificar</button>
+                <button class="modal-btn confirm" id="confirmBtn">Sí, confirmar</button>
+            </div>
+        </div>
     </div>
-
-    <div id="mensajeExito" style="display:none;" class="box">
-      <p>✅ Colega, sus datos han sido guardados exitosamente :)</p>
+    
+    <div id="successMessage" class="success-message">
+        <i class="fas fa-check-circle" style="font-size: 48px; color: #2a7d46;"></i>
+        <h2>¡Colega, sus datos han sido guardados exitosamente! :)</h2>
     </div>
+    
+    
+    <footer>
+        <p>Esta aplicación web ha sido creada por el área agrícola de Patagoniafresh</p>
+    </footer>
 
-  </div>
-
-  <footer>
-    Esta aplicación web ha sido creada por el área agrícola de Patagoniafresh
-  </footer>
-
-  <script>
-    const agricultores = {
-      "Eugenio Cornejo": ["Cinco Teosoras 234", "Miguel contreras 134", "Benjamin Zapata 111"],
-      "Fabian Cornejo": ["Myrian Quitral 123", "Hendry Lopez 123", "Ramon Cea 231"],
-      "Juan Soto": ["Osvaldo Morande 123", "Patricio Lagos 345", "Elia Lopez 232"],
-      "Victor Olivares": ["Patagoniafresh 111", "Amaro 232", "Ivan Labra 123"]
-    };
-
-    function actualizarAgricultores() {
-      const zonal = document.getElementById("zonal").value;
-      const agricultorSelect = document.getElementById("agricultor");
-      agricultorSelect.innerHTML = "";
-      if (agricultores[zonal]) {
-        agricultores[zonal].forEach(a => {
-          const option = document.createElement("option");
-          option.value = a;
-          option.textContent = a;
-          agricultorSelect.appendChild(option);
+    <script>
+        // Datos de agricultores por zonal
+        const agricultoresData = {
+            "Eugenio Cornejo": [
+                {nombre: "Cinco Teosoras", contrato: "234"},
+                {nombre: "Miguel Contreras", contrato: "134"},
+                {nombre: "Benjamin Zapata", contrato: "111"}
+            ],
+            "Fabian Cornejo": [
+                {nombre: "Myrian Quitral", contrato: "123"},
+                {nombre: "Hendry Lopez", contrato: "123"},
+                {nombre: "Ramon Cea", contrato: "231"}
+            ],
+            "Juan Soto": [
+                {nombre: "Osvaldo Morande", contrato: "123"},
+                {nombre: "Patricio Lagos", contrato: "345"},
+                {nombre: "Elia Lopez", contrato: "232"}
+            ],
+            "Victor Olivares": [
+                {nombre: "Patagoniafresh", contrato: "111"},
+                {nombre: "Amaro", contrato: "232"},
+                {nombre: "Ivan Labra", contrato: "123"}
+            ]
+        };
+        
+        // Elementos DOM
+        const zonalSelect = document.getElementById('zonal');
+        const agricultoresContainer = document.getElementById('agricultoresContainer');
+        const agricultorSelect = document.getElementById('agricultor');
+        const submitBtn = document.getElementById('submitBtn');
+        const modal = document.getElementById('confirmationModal');
+        const modalData = document.getElementById('modalData');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const successMessage = document.getElementById('successMessage');
+        
+        // Evento para cambiar zonal
+        zonalSelect.addEventListener('change', function() {
+            const zonal = this.value;
+            
+            if (zonal && agricultoresData[zonal]) {
+                // Mostrar selector de agricultores
+                agricultoresContainer.classList.remove('hidden');
+                
+                // Limpiar opciones anteriores
+                agricultorSelect.innerHTML = '<option value="">Seleccione un agricultor</option>';
+                
+                // Agregar nuevas opciones
+                agricultoresData[zonal].forEach(agricultor => {
+                    const option = document.createElement('option');
+                    option.value = `${agricultor.nombre} - ${agricultor.contrato}`;
+                    option.textContent = `${agricultor.nombre} - Contrato: ${agricultor.contrato}`;
+                    agricultorSelect.appendChild(option);
+                });
+            } else {
+                agricultoresContainer.classList.add('hidden');
+            }
         });
-      }
-    }
-
-    function confirmarDatos() {
-      const zonal = document.getElementById("zonal").value;
-      const agricultor = document.getElementById("agricultor").value;
-      const maquina = document.getElementById("maquina").value;
-      const fecha = document.getElementById("fecha").value;
-      const hectareas = document.getElementById("hectareas").value;
-      const resumen = `
-        Zonal: ${zonal}<br>
-        Agricultor: ${agricultor}<br>
-        Máquina: ${maquina}<br>
-        Fecha: ${fecha}<br>
-        Ha trasplantadas: ${hectareas}
-      `;
-      document.getElementById("resumenDatos").innerHTML = resumen;
-      document.getElementById("popup").style.display = "block";
-    }
-
-    function guardarDatos() {
-      const formData = {
-        zonal: document.getElementById("zonal").value,
-        agricultor: document.getElementById("agricultor").value,
-        maquina: document.getElementById("maquina").value,
-        fecha: document.getElementById("fecha").value,
-        hectareas: document.getElementById("hectareas").value,
-        timestamp: new Date().toLocaleString()
-      };
-
-      fetch("https://script.google.com/macros/s/AKfycbwBE72fD8lHszRYabhq5VD8BOp_9PSwB1rE9RaLdnjkkOP8Zv_tZlxpDnTkhP-kFCyI7Q/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
-
-      document.getElementById("popup").style.display = "none";
-      document.getElementById("mensajeExito").style.display = "block";
-      document.getElementById("registroForm").reset();
-    }
-  </script>
+        
+        // Evento para enviar formulario
+        submitBtn.addEventListener('click', function() {
+            // Validar formulario
+            if (!document.getElementById('registroForm').checkValidity()) {
+                alert('Por favor, complete todos los campos obligatorios.');
+                return;
+            }
+            
+            // Obtener valores del formulario
+            const zonal = zonalSelect.value;
+            const agricultor = agricultorSelect.value;
+            const maquina = document.getElementById('maquina').value;
+            const fecha = document.getElementById('fecha').value;
+            const hectareas = document.getElementById('hectareas').value;
+            
+            // Mostrar datos en el modal
+            modalData.innerHTML = `
+                <p><strong>Zonal:</strong> ${zonal}</p>
+                <p><strong>Agricultor y contrato:</strong> ${agricultor}</p>
+                <p><strong>Máquina:</strong> ${maquina}</p>
+                <p><strong>Fecha:</strong> ${fecha}</p>
+                <p><strong>Hectáreas:</strong> ${hectareas}</p>
+            `;
+            
+            // Mostrar modal
+            modal.style.display = 'flex';
+        });
+        
+        // Evento para cancelar en el modal
+        cancelBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Evento para confirmar en el modal
+        confirmBtn.addEventListener('click', function() {
+            // Ocultar modal
+            modal.style.display = 'none';
+            
+            // Obtener valores del formulario
+            const zonal = zonalSelect.value;
+            const agricultor = agricultorSelect.value;
+            const maquina = document.getElementById('maquina').value;
+            const fecha = document.getElementById('fecha').value;
+            const hectareas = document.getElementById('hectareas').value;
+            const timestamp = new Date().toLocaleString();
+            
+            // Enviar datos a Google Sheets
+            sendDataToGoogleSheets(zonal, agricultor, maquina, fecha, hectareas, timestamp);
+            
+            // Mostrar mensaje de éxito
+            successMessage.style.display = 'block';
+            
+            // Desplazar hacia el mensaje de éxito
+            successMessage.scrollIntoView({behavior: 'smooth'});
+            
+            // Opcional: resetear el formulario después de 5 segundos
+            setTimeout(() => {
+                document.getElementById('registroForm').reset();
+                agricultoresContainer.classList.add('hidden');
+                successMessage.style.display = 'none';
+            }, 5000);
+        });
+        
+        // Establecer fecha actual por defecto
+        document.getElementById('fecha').valueAsDate = new Date();
+        
+        // Función para enviar datos a Google Sheets
+        function sendDataToGoogleSheets(zonal, agricultor, maquina, fecha, hectareas, timestamp) {
+            // URL de tu Google Apps Script (debes reemplazar esto con tu URL)
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzJVf9TTCZKtFdfw1NBiUNQk3e4r3MPO-Ub-tAPrDwjTaGJUvQwk6OEorPNkaHjQGv5pQ/exec';
+            
+            // Crear objeto con los datos a enviar
+            const data = {
+                zonal: zonal,
+                agricultor: agricultor,
+                maquina: maquina,
+                fecha: fecha,
+                hectareas: hectareas,
+                timestamp: timestamp
+            };
+            
+            // Enviar datos usando fetch
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                console.log('Datos enviados correctamente');
+            })
+            .catch(error => {
+                console.error('Error al enviar datos:', error);
+            });
+        }
+    </script>
 </body>
 </html>
